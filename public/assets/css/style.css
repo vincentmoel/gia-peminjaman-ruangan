@@ -1,0 +1,13 @@
+.color-gia{
+    color: #EFAE2C;
+}
+
+.btn-add{
+    background-color: var(--color-secondary-dark);
+    color: var(--color-white);
+    font-family: var(--font-secondary);
+}
+
+.btn-add:hover{
+    color: wheat;
+}
