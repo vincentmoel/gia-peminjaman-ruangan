@@ -108,14 +108,6 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Disable aos animation delay on mobile devices
---------------------------------------------------------------*/
-@media screen and (max-width: 768px) {
-  [data-aos-delay] {
-    transition-delay: 0 !important;
-  }
-}
-/*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
 .header {
@@ -163,7 +155,7 @@ section {
 /*--------------------------------------------------------------
 # Desktop Navigation 
 --------------------------------------------------------------*/
-@media (min-width: 1280px) {
+@media (min-width: 992px) {
   .navbar {
     padding: 0;
     position: relative;
@@ -291,18 +283,12 @@ section {
     visibility: visible;
   }
 }
-@media (min-width: 1280px) and (max-width: 1366px) {
-  .navbar .dropdown .dropdown ul {
-    left: -90%;
-  }
-  .navbar .dropdown .dropdown:hover > ul {
-    left: -100%;
-  }
-}
+
+
 /*--------------------------------------------------------------
 # Mobile Navigation
 --------------------------------------------------------------*/
-@media (max-width: 1279px) {
+@media (max-width: 992px) {
   .navbar {
     position: fixed;
     top: 0;

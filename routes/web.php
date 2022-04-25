@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,6 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::resource('rooms', DepartmentController::class);
+Route::resource('rooms', RoomController::class);
 Route::resource('divisions', DivisionController::class);
 Route::resource('departments', DepartmentController::class);

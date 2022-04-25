@@ -27,12 +27,12 @@
   <link href="/assets/css/style.css?ver=<?= filemtime('assets/css/style.css') ?>" rel="stylesheet">
 
   <!-- Data Tables -->
-  {{-- <link rel="stylesheet" href="assets\vendor\DataTables\DataTables-1.11.5\css\jquery.dataTables.min.css"> --}}
-  {{-- <script src="assets\vendor\DataTables\DataTables-1.11.5\js\jquery.dataTables.min.js"></script> --}}
-  
   <script src="/assets/js/jquery-3.5.1.js"></script>
-  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <script src="/assets/vendor/DataTables/DataTables-1.11.5/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="/assets/vendor/DataTables/DataTables-1.11.5/css/jquery.dataTables.min.css">
+  
+  {{-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> --}}
+  {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"> --}}
 
 
 
