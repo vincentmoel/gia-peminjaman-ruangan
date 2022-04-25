@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDepartmentRequest;
 use App\Models\Department;
 use App\Services\DepartmentServices;
 use Illuminate\Http\Request;
@@ -22,24 +23,17 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('department.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDepartmentRequest $request, DepartmentServices $department)
     {
-        //
+        // dd($request);
+        $saveData = $department->saveData($request);
+        return redirect('/departments')->with('success', 'Success Save Data');
+
     }
 
     /**
