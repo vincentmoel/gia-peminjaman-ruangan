@@ -2,7 +2,7 @@
 
 @section('container')
 
-asdasd
+
 
 
 @endsection
