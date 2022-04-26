@@ -21,6 +21,11 @@ class DepartmentServices{
         return $department ? true : false;
     }
 
+    public function deleteData(Department $department)
+    {
+        $department->delete();
+    }
+
 
 }
 

@@ -14,9 +14,9 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(DepartmentServices $department)
+    public function index(DepartmentServices $departmentService)
     {
-        $departments = $department->getAll();
+        $departments = $departmentService->getAll();
         return view('department.index',[
             "departments" => $departments
         ]);
@@ -28,10 +28,10 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDepartmentRequest $request, DepartmentServices $department)
+    public function store(StoreDepartmentRequest $request, DepartmentServices $departmentService)
     {
         // dd($request);
-        $saveData = $department->saveData($request);
+        $saveData = $departmentService->saveData($request);
         return redirect('/departments')->with('success', 'Success Save Data');
 
     }
@@ -65,9 +65,14 @@ class DepartmentController extends Controller
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(StoreDepartmentRequest $request, Department $department)
     {
-        //
+        dd($request);
+        $department->update([
+            'name' => $request->name
+        ]);
+        return redirect('/departments')->with('success', 'Success Update Data');
+
     }
 
     /**
@@ -76,8 +81,10 @@ class DepartmentController extends Controller
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Department $department)
+    public function destroy(Department $department, DepartmentServices $departmentService)
     {
-        //
+        $departmentService->deleteData($department);
+        return redirect('/departments')->with('success', 'Success Delete Data');
+
     }
 }
