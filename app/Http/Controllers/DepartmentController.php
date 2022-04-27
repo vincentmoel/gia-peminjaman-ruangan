@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDepartmentRequest;
+use App\Http\Requests\UpdateDepartmentRequest;
 use App\Models\Department;
 use App\Services\DepartmentServices;
 use Illuminate\Http\Request;
@@ -37,17 +38,6 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Department  $department
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Department $department)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Department  $department
@@ -55,7 +45,9 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //
+        return view('department.edit',[
+            'department' => $department
+        ]);
     }
 
     /**
@@ -65,12 +57,9 @@ class DepartmentController extends Controller
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreDepartmentRequest $request, Department $department)
+    public function update(UpdateDepartmentRequest $request, Department $department, DepartmentServices $departmentServices)
     {
-        dd($request);
-        $department->update([
-            'name' => $request->name
-        ]);
+        $departmentServices->updateData($request,$department);
         return redirect('/departments')->with('success', 'Success Update Data');
 
     }

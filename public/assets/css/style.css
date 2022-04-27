@@ -11,3 +11,15 @@
 .btn-add:hover{
     color: wheat;
 }
+
+.header-wrapper {
+    border-bottom: solid #dee2e6 1px;
+}
+
+#go-back-link:hover #arrow-left{
+    display: none;
+}
+
+#go-back-link:hover #arrow-left-fill{
+    display: inline !important;
+}

@@ -49,7 +49,7 @@
     <!-- End Header -->
 
 
-    <main id="main" style="margin-top:145px; min-height: 90vh">
+    <main class="mb-5" id="main" style="margin-top:145px; min-height: 90vh">
         <div class="container">
             @yield('container')
         </div>

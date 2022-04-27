@@ -21,5 +21,5 @@ Route::get('/', function () {
 });
 
 Route::resource('rooms', RoomController::class);
-Route::resource('divisions', DivisionController::class);
-Route::resource('departments', DepartmentController::class);
+Route::resource('divisions', DivisionController::class)->except('show','create');
+Route::resource('departments', DepartmentController::class)->except('show','create');
