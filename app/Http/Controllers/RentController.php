@@ -3,10 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rent;
+use App\Services\DivisionServices;
+use App\Services\RentServices;
+use App\Services\RoomServices;
 use Illuminate\Http\Request;
 
 class RentController extends Controller
 {
+    public function __construct()
+    {
+        $this->rentServices = new RentServices();
+        $this->roomServices = new RoomServices();
+        $this->divisionServices = new DivisionServices();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,10 @@ class RentController extends Controller
      */
     public function index()
     {
-        
+        $rents = $this->rentServices->getAll();
+        return view('rent.index',[
+            'rents' => $rents
+        ]);
     }
 
     /**
