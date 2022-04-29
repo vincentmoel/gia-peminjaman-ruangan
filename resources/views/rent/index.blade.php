@@ -36,7 +36,6 @@
                 <th>From Date</th>
                 <th>Until Date</th>
                 <th>Description</th>
-                <th>Note</th>
                 <th>Created At</th>
                 <th>Updated At</th>
                 <th>Action</th>
@@ -57,11 +56,12 @@
                     <td>{{ $rent->borrower_name }}</td>
                     <td>{{ $rent->phone }}</td>
                     @php
-                        $phpdate = strtotime($rent->from_date);
-                        $mysqldate = date('Y-m-d H:i:s', $phpdate);
+                        $from_date = date('d-m-Y H:i:s', strtotime($rent->from_date));
+                        $until_date = date('d-m-Y H:i:s', strtotime($rent->until_date));
                     @endphp
-                    <td>{{ $mysqldate }}</td>
-                    {{-- <td>{{ date_format($rent->until_date, 'd-m-Y H:i:s') }}</td> --}}
+                    <td>{{ $from_date }}</td>
+                    <td>{{ $until_date }}</td>
+                    <td>{{ $rent->description }}</td>
                     <td>{{ date_format($rent->created_at, 'd-m-Y H:i:s') }}</td>
                     <td>{{ date_format($rent->updated_at, 'd-m-Y H:i:s') }}</td>
                     <td>
@@ -87,7 +87,6 @@
                 <th>From Date</th>
                 <th>Until Date</th>
                 <th>Description</th>
-                <th>Note</th>
                 <th>Created At</th>
                 <th>Updated At</th>
                 <th>Action</th>
@@ -110,9 +109,27 @@
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="name" class="form-label">rent Name</label>
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror">
-                            @error('name')
+                            <label for="borrower_name" class="form-label">Rent Name</label>
+                            <input type="text" name="borrower_name" class="form-control @error('borrower_name') is-invalid @enderror">
+                            @error('borrower_name')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Rent Name</label>
+                            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror">
+                            @error('phone')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Rent Name</label>
+                            <input type="text" name="description" class="form-control @error('description') is-invalid @enderror">
+                            @error('description')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

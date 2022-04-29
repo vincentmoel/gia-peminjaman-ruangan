@@ -22,7 +22,6 @@ class RentSeeder extends Seeder
             'from_date'     => '2021-12-30 15:57:16.000000',
             'until_date'    => '2021-12-31 15:57:16.000000',
             'description'   => 'Pinjam desc',
-            'note'          => 'pinjam note'
         ]);
     }
 }

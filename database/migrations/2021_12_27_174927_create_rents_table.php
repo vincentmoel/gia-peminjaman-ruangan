@@ -22,7 +22,6 @@ class CreateRentsTable extends Migration
             $table->dateTime('from_date');
             $table->dateTime('until_date');
             $table->text('description');
-            $table->text('note');
             $table->timestamps();
         });
     }

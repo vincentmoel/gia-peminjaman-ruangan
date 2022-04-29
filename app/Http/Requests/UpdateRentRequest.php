@@ -30,8 +30,7 @@ class UpdateRentRequest extends FormRequest
             'phone'         => 'required',
             'from_date'     => 'required',
             'until_date'    => 'required',
-            'description'   => 'required',
-            'note'          => 'required'
+            'description'   => 'required'
         ];
     }
 }
