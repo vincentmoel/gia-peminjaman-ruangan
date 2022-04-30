@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRentRequest;
+use App\Http\Requests\UpdateRentRequest;
 use App\Models\Rent;
 use App\Services\DivisionServices;
 use App\Services\RentServices;
@@ -25,8 +27,12 @@ class RentController extends Controller
     public function index()
     {
         $rents = $this->rentServices->getAll();
-        return view('rent.index',[
-            'rents' => $rents
+        $rooms = $this->roomServices->getAll();
+        $divisions = $this->divisionServices->getAll();
+        return view('rent.index', [
+            'rents'     => $rents,
+            'rooms'     => $rooms,
+            'divisions' => $divisions
         ]);
     }
 
@@ -46,9 +52,22 @@ class RentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRentRequest $request)
     {
-        //
+        $isAvailable = $this->rentServices->isAvailable($request->from_date,$request->until_date,$request->room_id);
+        if($isAvailable == 'available')
+        {
+            $this->rentServices->saveData($request);
+            return redirect('/')->with('success', 'Success Save Data');
+        }
+        else
+        {
+            $room = $this->roomServices->getRoomById($request->room_id);
+            return redirect('/')->with([
+                'error' => "Error : ".$room->name." Collision of dates",
+                'data'  => $isAvailable
+            ])->withInput();
+        }
     }
 
     /**
@@ -70,7 +89,14 @@ class RentController extends Controller
      */
     public function edit(Rent $rent)
     {
-        //
+        
+        $rooms = $this->roomServices->getAll();
+        $divisions = $this->divisionServices->getAll();
+        return view('rent.edit',[
+            'rent'      => $rent,
+            'rooms'        => $rooms,
+            'divisions' => $divisions
+        ]);
     }
 
     /**
@@ -80,9 +106,27 @@ class RentController extends Controller
      * @param  \App\Models\Rent  $rent
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rent $rent)
+    public function update(UpdateRentRequest $request, Rent $rent)
     {
-        //
+
+        $isAvailable = $this->rentServices->isAvailable($request->from_date,$request->until_date,$request->room_id);
+        if($isAvailable == 'available')
+        {
+            $this->rentServices->updateData($request,$rent);
+            return redirect('/rents')->with('success', 'Success Save Data');
+        }
+        else
+        {
+            $room = $this->roomServices->getRoomById($request->room_id);
+            return redirect("/rents/$rent->id/edit")->with([
+                'error' => "Error : ".$room->name." Collision of dates",
+                'data'  => $isAvailable
+            ])->withInput();
+        }
+
+        
+        
+
     }
 
     /**
@@ -93,6 +137,10 @@ class RentController extends Controller
      */
     public function destroy(Rent $rent)
     {
-        //
+        $this->rentServices->deleteData($rent);
+        return redirect('/')->with('success' , 'Success Delete Data');
+
     }
+
+    
 }

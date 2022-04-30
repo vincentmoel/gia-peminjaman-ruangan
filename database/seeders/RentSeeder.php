@@ -16,12 +16,12 @@ class RentSeeder extends Seeder
     {
         Rent::create([
             'room_id'       => '1',
-            'division_id'   => '2',
-            'borrower_name' => 'Borrow 1',
-            'phone'         => '0851',
+            'division_id'   => '1',
+            'borrower_name' => 'Vincent Nathaniel',
+            'phone'         => '085156591059',
             'from_date'     => '2021-12-30 15:57:16.000000',
             'until_date'    => '2021-12-31 15:57:16.000000',
-            'description'   => 'Pinjam desc',
+            'description'   => 'Untuk rekaman',
         ]);
     }
 }

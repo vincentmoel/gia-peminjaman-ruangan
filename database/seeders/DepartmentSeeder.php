@@ -15,15 +15,20 @@ class DepartmentSeeder extends Seeder
     public function run()
     {
         Department::create([
-            'name' => 'Department 1'
+            'name' => 'Gedung Gereja'
         ]);
 
         Department::create([
-            'name' => 'Department 2'
+            'name' => 'Sekretariat'
         ]);
 
         Department::create([
-            'name' => 'Department 3'
+            'name' => 'Mitra Graha'
+        ]);
+
+        
+        Department::create([
+            'name' => 'STEP'
         ]);
 
     }

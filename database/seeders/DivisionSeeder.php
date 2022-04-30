@@ -15,15 +15,23 @@ class DivisionSeeder extends Seeder
     public function run()
     {
         Division::create([
-            'name' => 'Divisi 1'
+            'name' => 'Seksi Multimedia'
         ]);
 
         Division::create([
-            'name' => 'Divisi 2'
+            'name' => 'Seksi Musik'
         ]);
 
         Division::create([
-            'name' => 'Divisi 3'
+            'name' => 'Seksi Wanita'
+        ]);
+        
+        Division::create([
+            'name' => 'KAA'
+        ]);
+
+        Division::create([
+            'name' => 'PRBK'
         ]);
     }
 }

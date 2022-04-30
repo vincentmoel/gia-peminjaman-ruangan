@@ -1,10 +1,15 @@
 @extends('template.main')
 
 @section('container')
-    <div class="header-wrapper pb-3 mb-4">
-        <h1>rents</h1>
-    </div>
+    <script type="text/javascript" src="/assets/vendor/daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="/assets/vendor/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" href="/assets/vendor/daterangepicker/daterangepicker.css">
 
+
+
+    <div class="header-wrapper pb-3 mb-4">
+        <h1>Rents</h1>
+    </div>
 
 
     @if (session()->has('success'))
@@ -14,12 +19,33 @@
         </div>
     @endif
 
+    @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div>
+                <div class="mb-2">{{ session('error') }} with</div>
+                <div>
+                    <div class="row">
+                        @foreach (session('data') as $data)
+                            @php
+                                $from_date = date('d-m-Y H:i', strtotime($data->from_date));
+                                $until_date = date('d-m-Y H:i', strtotime($data->until_date));
+                            @endphp
+                            <li>{{ $data->division->name }} | {{ $data->borrower_name }} | {{ $data->description }} | <strong>{{ $from_date }} to {{ $until_date }}</strong></li>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
+
 
 
     <div class="mb-4">
-        {{-- <a href="/rents/create" class="btn btn-add"><i class="bi bi-plus-circle"></i> Add rent</a> --}}
         <button type="button" class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addDataModal">
-            <i class="bi bi-plus-circle"></i> Add rent
+            <i class="bi bi-plus-circle"></i> Add Rent
         </button>
     </div>
 
@@ -36,8 +62,6 @@
                 <th>From Date</th>
                 <th>Until Date</th>
                 <th>Description</th>
-                <th>Created At</th>
-                <th>Updated At</th>
                 <th>Action</th>
 
             </tr>
@@ -56,14 +80,12 @@
                     <td>{{ $rent->borrower_name }}</td>
                     <td>{{ $rent->phone }}</td>
                     @php
-                        $from_date = date('d-m-Y H:i:s', strtotime($rent->from_date));
-                        $until_date = date('d-m-Y H:i:s', strtotime($rent->until_date));
+                        $from_date = date('d-m-Y H:i', strtotime($rent->from_date));
+                        $until_date = date('d-m-Y H:i', strtotime($rent->until_date));
                     @endphp
                     <td>{{ $from_date }}</td>
                     <td>{{ $until_date }}</td>
                     <td>{{ $rent->description }}</td>
-                    <td>{{ date_format($rent->created_at, 'd-m-Y H:i:s') }}</td>
-                    <td>{{ date_format($rent->updated_at, 'd-m-Y H:i:s') }}</td>
                     <td>
                         <a href="/rents/{{ $rent->id }}/edit" class="btn btn-primary">Edit</a>
                         <form action="/rents/{{ $rent->id }}" method="POST" class="d-inline">
@@ -87,8 +109,6 @@
                 <th>From Date</th>
                 <th>Until Date</th>
                 <th>Description</th>
-                <th>Created At</th>
-                <th>Updated At</th>
                 <th>Action</th>
             </tr>
         </tfoot>
@@ -109,8 +129,30 @@
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="borrower_name" class="form-label">Rent Name</label>
-                            <input type="text" name="borrower_name" class="form-control @error('borrower_name') is-invalid @enderror">
+                            <label for="room_id" class="form-label">Room</label>
+                            <select class="form-select @error('room_id') is-invalid @enderror"
+                                aria-label="Default select example" name="room_id">
+                                <option value="" selected disabled>Choose One</option>
+                                @foreach ($rooms as $room)
+                                    @if (old('room_id') == $room->id)
+                                        <option value="{{ $room->id }}" selected>{{ $room->name }}</option>
+                                    @else
+                                        <option value="{{ $room->id }}">{{ $room->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('room_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="borrower_name" class="form-label">Borrower Name</label>
+                            <input type="text" name="borrower_name"
+                                class="form-control @error('borrower_name') is-invalid @enderror"
+                                value="{{ old('borrower_name') }}">
                             @error('borrower_name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -118,26 +160,74 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="phone" class="form-label">Rent Name</label>
-                            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
+                                value="{{ old('phone') }}">
                             @error('phone')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
+
                         <div class="mb-3">
-                            <label for="description" class="form-label">Rent Name</label>
-                            <input type="text" name="description" class="form-control @error('description') is-invalid @enderror">
+                            <label for="division_id" class="form-label">Division</label>
+                            <select class="form-select @error('division_id') is-invalid @enderror"
+                                aria-label="Default select example" name="division_id">
+                                <option value="" selected disabled>Choose Borrower Division</option>
+                                @foreach ($divisions as $division)
+                                    @if (old('division_id') == $division->id)
+                                        <option value="{{ $division->id }}" selected>{{ $division->name }}</option>
+                                    @else
+                                        <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                            @error('division_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" name="description"
+                                class="form-control @error('description') is-invalid @enderror"
+                                value="{{ old('description') }}">
                             @error('description')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
+                        <div class="mb-3">
+                            <label for="from_date" class="form-label">From Date</label>
+                            <input type="text" name="from_date" value="{{ old('from_date') }}"
+                                class="form-control @error('from_date') is-invalid @enderror" id="daterange-from"
+                                value="{{ old('from_date') }}">
+
+                            @error('from_date')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="until_date" class="form-label">Until Date</label>
+                            <input type="text" name="until_date"
+                                class="form-control @error('until_date') is-invalid @enderror" id="daterange-until"
+                                value="{{ old('until_date') }}">
+
+                            @error('until_date')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <div class="modal-footer justify-content-between">
+                        <button type="reset" class="btn btn-secondary">Clear Form</button>
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </form>
@@ -150,16 +240,66 @@
 
 
 
-
     <script>
         $(document).ready(function() {
             $('#data-table').DataTable();
+
             @if (count($errors) > 0)
                 $('#addDataModal').modal('show');
             @endif
 
 
         });
+
+        $('#daterange-from,#daterange-until').daterangepicker({
+            "singleDatePicker": true,
+            "timePicker": true,
+            "timePicker24Hour": true,
+            "autoApply": true,
+            "locale": {
+                "direction": "ltr",
+                "format": "MM/DD/YYYY HH:mm",
+                "separator": " - ",
+                "applyLabel": "Apply",
+                "cancelLabel": "Cancel",
+                "fromLabel": "From",
+                "toLabel": "To",
+                "customRangeLabel": "Custom",
+                "daysOfWeek": [
+                    "Su",
+                    "Mo",
+                    "Tu",
+                    "We",
+                    "Th",
+                    "Fr",
+                    "Sa"
+                ],
+                "monthNames": [
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                    "August",
+                    "September",
+                    "October",
+                    "November",
+                    "December"
+                ],
+                "firstDay": 1
+            },
+            "linkedCalendars": false,
+            "startDate": "{{ date('m/d/Y H:i') }}",
+            "drops": "up"
+        }, function(start, end, label) {
+            console.log(
+                "New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')"
+            );
+        });
+
+
 
 
 

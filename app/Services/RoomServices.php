@@ -14,6 +14,11 @@ class RoomServices{
         return Room::get();
     }
 
+    public function getRoomById($id)
+    {
+        return Room::where('id',$id)->first();
+    }
+
     public function saveData(StoreRoomRequest $request)
     {
         $room = Room::create([

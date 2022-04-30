@@ -13,7 +13,7 @@ class StoreRentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,8 +28,8 @@ class StoreRentRequest extends FormRequest
             'division_id'   => 'required',
             'borrower_name' => 'required',
             'phone'         => 'required',
-            'from_date'     => 'required',
-            'until_date'    => 'required',
+            'from_date'     => 'required|before:until_date',
+            'until_date'    => 'required|after:from_date',
             'description'   => 'required'
         ];
     }

@@ -10,6 +10,7 @@
             <ul>
 
                 <li><a class="{{ (request()->segment(1) == '') ? 'active' : '' }}" href="/">Home</a></li>
+                <li><a class="{{ (request()->segment(1) == 'rents') ? 'active' : '' }}" href="/rents">Rents</a></li>
                 <li><a class="{{ (request()->segment(1) == 'rooms') ? 'active' : '' }}" href="/rooms">Rooms</a></li>
                 <li><a class="{{ (request()->segment(1) == 'divisions') ? 'active' : '' }}" href="/divisions">Divisions</a></li>
                 <li><a class="{{ (request()->segment(1) == 'departments') ? 'active' : '' }}" href="/departments">Departments</a></li>
