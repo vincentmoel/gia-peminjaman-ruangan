@@ -19,8 +19,8 @@ class RentSeeder extends Seeder
             'division_id'   => '1',
             'borrower_name' => 'Vincent Nathaniel',
             'phone'         => '085156591059',
-            'from_date'     => '2021-12-30 15:57:16.000000',
-            'until_date'    => '2021-12-31 15:57:16.000000',
+            'from_date'     => '2022-12-30 15:57:16.000000',
+            'until_date'    => '2022-12-31 15:57:16.000000',
             'description'   => 'Untuk rekaman',
         ]);
     }

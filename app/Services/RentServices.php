@@ -71,7 +71,7 @@ class RentServices
 
     public function getActiveSchedule()
     {
-        $rents = Rent::where('until_date','>',date('Y-m-d H:i:s'))->get();
+        $rents = Rent::where('until_date','>',date('Y-m-d H:i:s'))->orderBy('from_date', 'asc')->get();
         // dd(Str::replaceArray('?', $rents->getBindings(), $rents->toSql()));
 
         return $rents;

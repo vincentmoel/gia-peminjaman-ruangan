@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[HomeController::class,'index']);
+Route::get('/date',[HomeController::class,'date']);
 Route::resource('rents', RentController::class);
 Route::resource('rooms', RoomController::class);
 Route::resource('divisions', DivisionController::class)->except('show','create');

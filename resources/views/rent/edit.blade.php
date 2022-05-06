@@ -189,6 +189,7 @@
                 "firstDay": 1
             },
             "linkedCalendars": false,
+            "startDate": "{{ date('m/d/Y H:i') }}",
             "drops": "up"
         }, function(start, end, label) {
             console.log(
