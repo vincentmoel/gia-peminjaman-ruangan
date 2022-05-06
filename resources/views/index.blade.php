@@ -4,7 +4,7 @@
     <div class="header-wrapper pb-3 mb-4 d-flex justify-content-between">
         <h1>On Going Schedules</h1>
         <h2>
-            <div class="runningTime"></div>
+            <div id="runningTime"></div>
         </h2>
     </div>
 
@@ -59,16 +59,14 @@
 
         });
 
-        function runningTime() {
             function runningTime() {
                 $.ajax({
-                    url: '/date',
+                    url: 'http://gia-peminjaman-ruangan.test/date',
+                    method: 'GET',
                     success: function(data) {
-                        console.log(data);
                         $('#runningTime').html(data);
                     },
                 });
             }
-        }
     </script>
 @endsection

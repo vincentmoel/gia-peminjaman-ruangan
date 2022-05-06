@@ -30,7 +30,7 @@ class HomeController extends Controller
 
     public function date()
     {
-        return date('Y-m-d H:i:s');
+        return date('l, d-m-Y H:i:s');
     }
 
 
