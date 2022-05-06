@@ -2,9 +2,10 @@
 
 @section('container')
     <div class="header-wrapper pb-3 mb-4 d-flex justify-content-between">
-        <h1>On Going Schedules</h1>
+        <h1 class="align-self-center">On Going Schedules</h1>
         <h2>
-            <div id="runningTime"></div>
+            <div>{{ date("l, d-m-Y") }}</div>
+            <div id="runningTime" class="text-center fw-bolder" ></div>
         </h2>
     </div>
 
@@ -29,15 +30,20 @@
             @endphp
 
             @foreach ($rents_active as $rent)
-                <tr style="background-color: #d1e7dd">
+                @php
+                    $from_date_second = strtotime($rent->from_date);
+                    $until_date_second = strtotime($rent->until_date);
+                    $from_date = date('d-m-Y H:i', $from_date_second);
+                    $until_date = date('d-m-Y H:i', $until_date_second);
+
+                    $date_now = strtotime(date('d-m-Y H:i:s'));
+
+                @endphp
+                <tr @if($from_date_second <= $date_now && $date_now < $until_date_second) style="background-color: #d1e7dd" @endif>
                     <td>{{ $no++ }}</td>
                     <td>{{ $rent->room->name }}</td>
                     <td>{{ $rent->division->name }}</td>
                     <td>{{ $rent->borrower_name }}</td>
-                    @php
-                        $from_date = date('d-m-Y H:i', strtotime($rent->from_date));
-                        $until_date = date('d-m-Y H:i', strtotime($rent->until_date));
-                    @endphp
                     <td>{{ $from_date }}</td>
                     <td>{{ $until_date }}</td>
                     <td>{{ $rent->description }}</td>
