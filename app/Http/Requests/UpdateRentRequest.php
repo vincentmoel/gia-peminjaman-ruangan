@@ -24,7 +24,6 @@ class UpdateRentRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'            => 'unique:rents,id,'.$this->rent->id,
             'room_id'       => 'required',
             'division_id'   => 'required',
             'borrower_name' => 'required',

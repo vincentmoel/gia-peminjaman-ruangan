@@ -109,7 +109,7 @@ class RentController extends Controller
     public function update(UpdateRentRequest $request, Rent $rent)
     {
 
-        $isAvailable = $this->rentServices->isAvailable($request->from_date,$request->until_date,$request->room_id);
+        $isAvailable = $this->rentServices->isAvailable($request->from_date,$request->until_date,$request->room_id,$rent->id);
         if($isAvailable == 'available')
         {
             $this->rentServices->updateData($request,$rent);

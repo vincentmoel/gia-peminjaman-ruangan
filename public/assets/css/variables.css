@@ -34,13 +34,13 @@
 
   /* Defult links color */
   --color-links: #0ea2bd;
-  --color-links-hover: #1ec3e0;
+  --color-links-hover: #EFAE2C;
 
   /* Primay colors */
   /* --color-primary: #0ea2bd; */
   --color-primary: #EFAE2C;
-  --color-primary-light: #1ec3e0;
-  --color-primary-dark: #0189a1;
+  --color-primary-light: #FFE5B7;
+  --color-primary-dark: #E8BE8A;
 
   --color-primary-rgb: 14, 162, 189;
   --color-primary-light-rgb: 30, 195, 224;
