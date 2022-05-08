@@ -37,16 +37,6 @@ class RentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -68,17 +58,6 @@ class RentController extends Controller
                 'data'  => $isAvailable
             ])->withInput();
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Rent  $rent
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Rent $rent)
-    {
-        //
     }
 
     /**
@@ -124,9 +103,30 @@ class RentController extends Controller
             ])->withInput();
         }
 
-        
-        
+    }
 
+    public function schedules()
+    {
+        $rents_active = $this->rentServices->getActiveSchedule();
+        $rooms = $this->roomServices->getAll();
+        $divisions = $this->divisionServices->getAll();
+        return view('rent.schedules',[
+            'rents_active'  => $rents_active,
+            'rooms'         => $rooms,
+            'divisions'     => $divisions
+        ]);
+    }
+
+    public function schedules_refresh()
+    {
+        $rents_active = $this->rentServices->getActiveSchedule();
+        $rooms = $this->roomServices->getAll();
+        $divisions = $this->divisionServices->getAll();
+        return view('rent.schedules_data_ajax',[
+            'rents_active'  => $rents_active,
+            'rooms'         => $rooms,
+            'divisions'     => $divisions
+        ]);
     }
 
     /**
@@ -138,7 +138,7 @@ class RentController extends Controller
     public function destroy(Rent $rent)
     {
         $this->rentServices->deleteData($rent);
-        return redirect('/')->with('success' , 'Success Delete Data');
+        return redirect('/rents')->with('success' , 'Success Delete Data');
 
     }
 

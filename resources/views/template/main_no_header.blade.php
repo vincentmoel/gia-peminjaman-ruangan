@@ -43,26 +43,32 @@
 
 <body class="bg-light">
 
-    <!-- ======= Header ======= -->
-    @include('partials.header')
-    <!-- End Header -->
 
-
-    <main class="mb-5" id="main" style="margin-top:145px; min-height: 70vh">
-        <div class="container">
+    <main class="m-4" id="main">
+        <div class="container-fluid">
             @yield('container')
         </div>
-        
+
     </main>
 
+    <footer id="footer" class="footer">
+        <div class="footer-legal text-center bg-dark" style="padding: 15px 0">
+            <div class="">
 
-    <!-- ======= Footer ======= -->
-    @include('partials.footer')
-    <!-- End Footer -->
+                <div class="">
 
-    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-
+                    <div class="text-light">
+                        Website by <a href="https://www.linkedin.com/in/vincentmoeljopranoto/" class="text-light"
+                            target="_blank"><strong>Vincent Nathaniel M</strong></a>
+                    </div>
+                    <div class="text-light">
+                        WhatsApp <a href="https://wa.me/6285156591059" class="text-light"
+                            target="_blank"><strong>0851-5659-1059</strong></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Vendor JS Files -->
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -71,5 +77,14 @@
     <script src="/assets/js/main.js"></script>
 
 </body>
+
+<style>
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+</style>
 
 </html>

@@ -43,25 +43,13 @@
 
 <body class="bg-light">
 
-    <!-- ======= Header ======= -->
-    @include('partials.header')
-    <!-- End Header -->
 
-
-    <main class="mb-5" id="main" style="margin-top:145px; min-height: 70vh">
-        <div class="container">
+    <main class="" id="main">
+        <div class="container-fluid">
             @yield('container')
         </div>
-        
+
     </main>
-
-
-    <!-- ======= Footer ======= -->
-    @include('partials.footer')
-    <!-- End Footer -->
-
-    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
 
 
     <!-- Vendor JS Files -->
@@ -71,5 +59,14 @@
     <script src="/assets/js/main.js"></script>
 
 </body>
+
+<style>
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+</style>
 
 </html>

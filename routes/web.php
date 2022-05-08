@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HomeController;
@@ -19,7 +20,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[HomeController::class,'index']);
+Route::get('/login',[AuthController::class,'index']);
+Route::post('/login',[AuthController::class,'authenticate']);
+
 Route::get('/date',[HomeController::class,'date']);
+Route::get('/schedules',[RentController::class,'schedules']);
+Route::post('/schedules-refresh',[RentController::class,'schedules_refresh']);
+
 Route::resource('rents', RentController::class);
 Route::resource('rooms', RoomController::class);
 Route::resource('divisions', DivisionController::class)->except('show','create');

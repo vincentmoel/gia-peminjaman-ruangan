@@ -42,7 +42,7 @@
   --color-primary-light: #FFE5B7;
   --color-primary-dark: #E8BE8A;
 
-  --color-primary-rgb: 14, 162, 189;
+  --color-primary-rgb: 239, 174, 44;
   --color-primary-light-rgb: 30, 195, 224;
   --color-primary-dark-rgb: 1, 137, 161;
 
@@ -93,6 +93,7 @@
   --color-gray-rgb: 108, 117, 125;
 
   --color-black: #000000;
+  --color-dark: #212529;
   --color-black-rgb: 0, 0, 0;
   
 }

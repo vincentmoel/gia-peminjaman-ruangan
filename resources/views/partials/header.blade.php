@@ -14,11 +14,12 @@
                 <li><a class="{{ (request()->segment(1) == 'rooms') ? 'active' : '' }}" href="/rooms">Rooms</a></li>
                 <li><a class="{{ (request()->segment(1) == 'divisions') ? 'active' : '' }}" href="/divisions">Divisions</a></li>
                 <li><a class="{{ (request()->segment(1) == 'departments') ? 'active' : '' }}" href="/departments">Departments</a></li>
+                <li><a class="" href="/schedules">Schedules</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle d-none"></i>
         </nav><!-- .navbar -->
         
-        <a class="btn-getstarted scrollto" href="index.html#about">Login</a>
+        <a class="btn-getstarted" href="/login">Login</a>
 
     </div>
 </header>
