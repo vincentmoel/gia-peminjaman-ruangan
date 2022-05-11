@@ -35,31 +35,29 @@
 
 
 
-    <div class="card text-center py-3 tes" style="width: 20rem; height:auto !important" >
-        <img src="/assets/img/logo.svg" alt="" width="100px" class="mx-auto mb-3">
+    <div class="card text-center py-4 make-middle" style="width: 20rem; max-height: 350px !important" >
+        <a href="/">
+            <img src="/assets/img/logo.svg" alt="" width="100px" class="mx-auto mb-3">
+        </a>
         <div class="card-body">
             <form>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <label for="exampleInputEmail1" class="form-label">Username</label>
                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1">
                 </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                
+                <button type="submit" class="btn btn-success w-100">Login</button>
             </form>
 
         </div>
     </div>
 
     <style>
-        .tes {
+        .make-middle {
             
             position: absolute;
             top: 0;
