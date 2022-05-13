@@ -48,12 +48,12 @@ class RentController extends Controller
         if($isAvailable == 'available')
         {
             $this->rentServices->saveData($request);
-            return redirect('/')->with('success', 'Success Save Data');
+            return redirect('/rents')->with('success', 'Success Save Data');
         }
         else
         {
             $room = $this->roomServices->getRoomById($request->room_id);
-            return redirect('/')->with([
+            return redirect('/rents')->with([
                 'error' => "Error : ".$room->name." Collision of dates",
                 'data'  => $isAvailable
             ])->withInput();

@@ -86,12 +86,12 @@
                     <td>{{ $from_date }}</td>
                     <td>{{ $until_date }}</td>
                     <td>{{ $rent->description }}</td>
-                    <td>
-                        <a href="/rents/{{ $rent->id }}/edit" class="btn btn-primary">Edit</a>
+                    <td class="text-center text-xxl-start">
+                        <a href="/rents/{{ $rent->id }}/edit" class="btn btn-primary mb-1 mb-xxl-0"><i class="bi bi-pencil-square"></i></a>
                         <form action="/rents/{{ $rent->id }}" method="POST" class="d-inline">
                             @method('DELETE')
                             @csrf
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -226,7 +226,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
+                    <div class="modal-footer justify-content-between text-center">
                         <button type="reset" class="btn btn-secondary">Clear Form</button>
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>

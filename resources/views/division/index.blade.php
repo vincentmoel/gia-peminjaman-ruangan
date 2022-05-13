@@ -46,11 +46,11 @@
                     <td>{{ date_format($division->created_at, 'd-m-Y H:i:s') }}</td>
                     <td>{{ date_format($division->updated_at, 'd-m-Y H:i:s') }}</td>
                     <td>
-                        <a href="/divisions/{{ $division->id }}/edit" class="btn btn-primary">Edit</a>
+                        <a href="/divisions/{{ $division->id }}/edit" class="btn btn-primary mb-sm-1 mb-md-0"><i class="bi bi-pencil-square"></i></a>
                         <form action="/divisions/{{ $division->id }}" method="POST" class="d-inline">
                             @method('DELETE')
                             @csrf
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
                         </form>
                     </td>
                 </tr>

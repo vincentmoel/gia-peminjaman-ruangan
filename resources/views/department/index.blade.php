@@ -48,12 +48,12 @@
                     <td>{{ $department->name }}</td>
                     <td>{{ date_format($department->created_at, 'd-m-Y H:i:s') }}</td>
                     <td>{{ date_format($department->updated_at, 'd-m-Y H:i:s') }}</td>
-                    <td>
-                        <a href="/departments/{{ $department->id }}/edit" class="btn btn-primary">Edit</a>
+                    <td class="text-sm-center text-md-start">
+                        <a href="/departments/{{ $department->id }}/edit" class="btn btn-primary mb-1 mb-md-0"><i class="bi bi-pencil-square"></i></a>
                         <form action="/departments/{{ $department->id }}" method="POST" class="d-inline">
                             @method('DELETE')
                             @csrf
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
                         </form>
                     </td>
                 </tr>

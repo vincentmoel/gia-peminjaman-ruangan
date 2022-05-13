@@ -19,15 +19,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[HomeController::class,'index']);
-Route::get('/login',[AuthController::class,'index']);
+Route::get('/',[HomeController::class,'index'])->middleware('revalidate');
 Route::post('/login',[AuthController::class,'authenticate']);
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/logout', function () { return redirect('/'); });
+
+Route::group(['middleware' => ['guest', 'revalidate']], function () {
+    Route::get('/login',[AuthController::class,'index'])->name('login');
+    
+});
+
+
+Route::group(['middleware' => ['auth', 'revalidate']], function () {
+    Route::resource('rents', RentController::class)->except('show','create');
+    Route::resource('rooms', RoomController::class)->except('show','create');
+    Route::resource('divisions', DivisionController::class)->except('show','create');
+    Route::resource('departments', DepartmentController::class)->except('show','create');
+});
+
 
 Route::get('/date',[HomeController::class,'date']);
 Route::get('/schedules',[RentController::class,'schedules']);
 Route::post('/schedules-refresh',[RentController::class,'schedules_refresh']);
 
-Route::resource('rents', RentController::class);
-Route::resource('rooms', RoomController::class);
-Route::resource('divisions', DivisionController::class)->except('show','create');
-Route::resource('departments', DepartmentController::class)->except('show','create');
+
+    

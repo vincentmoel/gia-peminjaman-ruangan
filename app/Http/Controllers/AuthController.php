@@ -17,18 +17,15 @@ class AuthController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email:dns',
-            'password' => 'required'
+            'username'  => 'required',
+            'password'  => 'required'
            
         ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             
-            if(Auth::user()->role == 'admin')
-            {
-                return redirect()->intended('/admin');
-            }
+            
             return redirect()->intended();
 
         }

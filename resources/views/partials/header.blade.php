@@ -10,16 +10,26 @@
             <ul>
 
                 <li><a class="{{ (request()->segment(1) == '') ? 'active' : '' }}" href="/">Home</a></li>
-                <li><a class="{{ (request()->segment(1) == 'rents') ? 'active' : '' }}" href="/rents">Rents</a></li>
-                <li><a class="{{ (request()->segment(1) == 'rooms') ? 'active' : '' }}" href="/rooms">Rooms</a></li>
-                <li><a class="{{ (request()->segment(1) == 'divisions') ? 'active' : '' }}" href="/divisions">Divisions</a></li>
-                <li><a class="{{ (request()->segment(1) == 'departments') ? 'active' : '' }}" href="/departments">Departments</a></li>
+                @auth
+                    <li><a class="{{ (request()->segment(1) == 'rents') ? 'active' : '' }}" href="/rents">Rents</a></li>
+                    <li><a class="{{ (request()->segment(1) == 'rooms') ? 'active' : '' }}" href="/rooms">Rooms</a></li>
+                    <li><a class="{{ (request()->segment(1) == 'divisions') ? 'active' : '' }}" href="/divisions">Divisions</a></li>
+                    <li><a class="{{ (request()->segment(1) == 'departments') ? 'active' : '' }}" href="/departments">Departments</a></li>
+                @endauth
                 <li><a class="" href="/schedules">Schedules</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle d-none"></i>
         </nav><!-- .navbar -->
         
-        <a class="btn-getstarted" href="/login">Login</a>
+        @auth
+        <form action="/logout" method="post" class="mb-0">
+            @csrf
+            <button type="submit" class="btn-logout">Logout</button>
+        </form>
+        @else
+            <a class="btn-getstarted" href="/login">Login</a>
+
+        @endauth
 
     </div>
 </header>
