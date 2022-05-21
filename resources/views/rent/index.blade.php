@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/assets/vendor/daterangepicker/daterangepicker.css">
 
 
-
     <div class="header-wrapper pb-3 mb-4">
         <h1>Rents</h1>
     </div>
@@ -30,7 +29,9 @@
                                 $from_date = date('d-m-Y H:i', strtotime($data->from_date));
                                 $until_date = date('d-m-Y H:i', strtotime($data->until_date));
                             @endphp
-                            <li>{{ $data->division->name }} | {{ $data->borrower_name }} | {{ $data->description }} | <strong>{{ $from_date }} to {{ $until_date }}</strong></li>
+                            <li>{{ $data->division->name }} | {{ $data->borrower_name }} | {{ $data->description }} |
+                                <strong>{{ $from_date }} to {{ $until_date }}</strong>
+                            </li>
                         @endforeach
                     </div>
                 </div>
@@ -87,8 +88,9 @@
                     <td>{{ $until_date }}</td>
                     <td>{{ $rent->description }}</td>
                     <td class="text-center text-xxl-start">
-                        <a href="/rents/{{ $rent->id }}/edit" class="btn btn-primary mb-1 mb-xxl-0"><i class="bi bi-pencil-square"></i></a>
-                        <form action="/rents/{{ $rent->id }}" method="POST" class="d-inline">
+                        <a href="/rents/{{ $rent->id }}/edit" class="btn btn-primary mb-1 mb-xxl-0"><i
+                                class="bi bi-pencil-square"></i></a>
+                        <form action="/rents/{{ $rent->id }}" method="POST" class="d-inline" id="form-delete">
                             @method('DELETE')
                             @csrf
                             <button class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
@@ -247,6 +249,8 @@
             @if (count($errors) > 0)
                 $('#addDataModal').modal('show');
             @endif
+
+            
 
 
         });

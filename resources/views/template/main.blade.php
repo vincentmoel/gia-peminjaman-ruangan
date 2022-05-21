@@ -37,8 +37,7 @@
     {{-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"> --}}
 
-
-
+    <script src="/assets/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body class="bg-light">
@@ -52,7 +51,7 @@
         <div class="container">
             @yield('container')
         </div>
-        
+
     </main>
 
 
@@ -73,3 +72,44 @@
 </body>
 
 </html>
+
+<script>
+    $("form[id=form-delete]").submit(function(e) {
+        e.preventDefault();
+        var form = this; // "this" is a reference to the submitted form
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger me-2'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your data has been deleted.',
+                    'success'
+                ).then(function() {
+                    form.submit(); // <--- submit form programmatically
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // swalWithBootstrapButtons.fire(
+                //     'Cancelled',
+                //     'Your imaginary file is safe :)',
+                //     'error'
+                // )
+            }
+        })
+    });
+</script>

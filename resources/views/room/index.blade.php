@@ -53,7 +53,7 @@
                     <td>{{ date_format($room->updated_at, 'd-m-Y H:i:s') }}</td>
                     <td class="text-center text-xl-start">
                         <a href="/rooms/{{ $room->id }}/edit" class="btn btn-primary mb-1 mb-xl-0"><i class="bi bi-pencil-square"></i></a>
-                        <form action="/rooms/{{ $room->id }}" method="POST" class="d-inline">
+                        <form action="/rooms/{{ $room->id }}" method="POST" class="d-inline" id="form-delete">
                             @method('DELETE')
                             @csrf
                             <button class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
