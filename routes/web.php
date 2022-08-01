@@ -31,6 +31,7 @@ Route::group(['middleware' => ['guest', 'revalidate']], function () {
 
 
 Route::group(['middleware' => ['auth', 'revalidate']], function () {
+    Route::post('/rents/check-availability/',[RentController::class,'checkAvailabilitySchedule']);
     Route::resource('rents', RentController::class)->except('show','create');
     Route::resource('rooms', RoomController::class)->except('show','create');
     Route::resource('divisions', DivisionController::class)->except('show','create');

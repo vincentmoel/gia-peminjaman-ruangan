@@ -9,6 +9,7 @@ use App\Services\DivisionServices;
 use App\Services\RentServices;
 use App\Services\RoomServices;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class RentController extends Controller
 {
@@ -47,11 +48,13 @@ class RentController extends Controller
         $isAvailable = $this->rentServices->isAvailable($request->from_date,$request->until_date,$request->room_id);
         if($isAvailable == 'available')
         {
+            return "a";
             $this->rentServices->saveData($request);
             return redirect('/rents')->with('success', 'Success Save Data');
         }
         else
         {
+            return "b";
             $room = $this->roomServices->getRoomById($request->room_id);
             return redirect('/rents')->with([
                 'error' => "Error : ".$room->name." Collision of dates",
@@ -139,6 +142,39 @@ class RentController extends Controller
     {
         $this->rentServices->deleteData($rent);
         return redirect('/rents')->with('success' , 'Success Delete Data');
+
+    }
+
+    public function checkAvailabilitySchedule(Request $request)
+    {
+        $request->validate([
+            "room_id"       => 'required',
+            'from_date'     => 'required|before:until_date',
+            'until_date'    => 'required|after:from_date'
+        ]);
+
+        $isAvailable = $this->rentServices->isAvailable($request->from_date,$request->until_date,$request->room_id);
+        
+        if($isAvailable == 'available')
+        {
+            $response = [
+                "code"      => "200",
+                "status"    => "success",
+                "message"   => "Room is available",
+                "data"      => "available"
+            ];
+        }
+        else
+        {
+            $response = [
+                "code"      => "422",
+                "status"    => "error",
+                "message"   => "Room is not available",
+                "data"      => $isAvailable
+            ];
+        }
+
+        return response()->json($response);
 
     }
 

@@ -124,15 +124,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addDataModalLabel">Add rent</h5>
+                    <h5 class="modal-title" id="addDataModalLabel">Add Rent</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <form action="/rents" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="room_id" class="form-label">Room</label>
-                            <select class="form-select @error('room_id') is-invalid @enderror"
+                            <select class="form-select @error('room_id') is-invalid @enderror" id="room_id"
                                 aria-label="Default select example" name="room_id">
                                 <option value="" selected disabled>Choose One</option>
                                 @foreach ($rooms as $room)
@@ -153,7 +154,7 @@
                         <div class="mb-3">
                             <label for="borrower_name" class="form-label">Borrower Name</label>
                             <input type="text" name="borrower_name"
-                                class="form-control @error('borrower_name') is-invalid @enderror"
+                                class="form-control @error('borrower_name') is-invalid @enderror" id="borrower_name"
                                 value="{{ old('borrower_name') }}">
                             @error('borrower_name')
                                 <div class="invalid-feedback">
@@ -164,7 +165,7 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label">Phone</label>
                             <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
-                                value="{{ old('phone') }}">
+                                id="phone" value="{{ old('phone') }}">
                             @error('phone')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -174,7 +175,7 @@
 
                         <div class="mb-3">
                             <label for="division_id" class="form-label">Division</label>
-                            <select class="form-select @error('division_id') is-invalid @enderror"
+                            <select class="form-select @error('division_id') is-invalid @enderror" id="division_id"
                                 aria-label="Default select example" name="division_id">
                                 <option value="" selected disabled>Choose Borrower Division</option>
                                 @foreach ($divisions as $division)
@@ -195,7 +196,7 @@
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
                             <input type="text" name="description"
-                                class="form-control @error('description') is-invalid @enderror"
+                                class="form-control @error('description') is-invalid @enderror" id="description"
                                 value="{{ old('description') }}">
                             @error('description')
                                 <div class="invalid-feedback">
@@ -206,7 +207,7 @@
                         <div class="mb-3">
                             <label for="from_date" class="form-label">From Date</label>
                             <input type="text" name="from_date" value="{{ old('from_date') }}"
-                                class="form-control @error('from_date') is-invalid @enderror" id="daterange-from"
+                                class="form-control @error('from_date') is-invalid @enderror" id="from_date"
                                 value="{{ old('from_date') }}">
 
                             @error('from_date')
@@ -218,7 +219,7 @@
                         <div class="mb-3">
                             <label for="until_date" class="form-label">Until Date</label>
                             <input type="text" name="until_date"
-                                class="form-control @error('until_date') is-invalid @enderror" id="daterange-until"
+                                class="form-control @error('until_date') is-invalid @enderror" id="until_date"
                                 value="{{ old('until_date') }}">
 
                             @error('until_date')
@@ -227,10 +228,17 @@
                                 </div>
                             @enderror
                         </div>
+                        <div>
+                            <button type="button" id="check-availability" class="btn btn-primary">Check
+                                Availability</button>
+                            <span class="ms-2 d-none" id="availability-message"><i class="bi bi-check-circle-fill"
+                                    style="color: green"></i> Room is
+                                Available!</span>
+                        </div>
                     </div>
-                    <div class="modal-footer justify-content-between text-center">
+                    <div class="modal-footer justify-content-end text-center">
                         <button type="reset" class="btn btn-secondary">Clear Form</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success" disabled id="submit-rent">Submit</button>
                     </div>
                 </form>
 
@@ -250,12 +258,12 @@
                 $('#addDataModal').modal('show');
             @endif
 
-            
+
 
 
         });
 
-        $('#daterange-from,#daterange-until').daterangepicker({
+        $('#from_date,#until_date').daterangepicker({
             "singleDatePicker": true,
             "timePicker": true,
             "timePicker24Hour": true,
@@ -301,6 +309,52 @@
             console.log(
                 "New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')"
             );
+        });
+
+        $("#check-availability").click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/rents/check-availability",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    from_date: $("input[name=from_date]").val(),
+                    until_date: $("input[name=until_date]").val(),
+                    room_id: $("select[name=room_id] option:selected").val()
+                },
+                beforeSend: function() {
+                    $('.invalid-feedback').remove();
+                    $('input').removeClass('is-invalid');
+                    $('select').removeClass('is-invalid');
+                    $('#submit-rent').prop("disabled", true);
+                    $('#availability-message').addClass("d-none");
+                    
+
+                },
+                success: function(jqXHR) {
+                    if(jqXHR.code == 200)
+                    {
+                        $('#submit-rent').prop("disabled", false);
+                        $('#availability-message').removeClass("d-none");
+                    }
+                    else if(jqXHR.code == 422)
+                    {
+                        console.log('asd');
+                    }
+                },
+                error: function(jqXHR) {
+                    if (jqXHR.status == 422) {
+                        var errors = jqXHR.responseJSON.errors;
+                        for (error in errors) {
+                            $("#" + error).addClass('is-invalid');
+                            $("#" + error).after(
+                                '<div class="invalid-feedback">' + errors[error] + '</div>'
+                            );
+                        }
+
+                    }
+                }
+            });
         });
 
 
