@@ -231,17 +231,24 @@
                                 </div>
                             @enderror
                         </div>
-                        <div>
+                        {{-- <div>
                             <button type="button" id="check-availability" class="btn btn-primary">Check
                                 Availability</button>
                             <span class="ms-2 d-none" id="availability-message"><i class="bi bi-check-circle-fill"
                                     style="color: green"></i> Room is
                                 Available!</span>
-                        </div>
+                        </div> --}}
                     </div>
-                    <div class="modal-footer justify-content-end text-center">
+                    <div class="modal-footer justify-content-start text-center">
+                        <button type="button" id="check-availability" class="btn btn-primary">Check
+                            Availability</button>
+                        <button type="submit" class="btn btn-success d-none" disabled id="submit-rent">Submit</button>
+                        <span class="ms-2 d-none" id="availability-message" style="color: green"><i
+                                class="bi bi-check-circle-fill"></i> Room is
+                            Available!</span>
+                        <span class="ms-2 d-none" id="collide-message" style="color: red"><i class="bi bi-x-circle-fill"></i>
+                            Room is Not Available!</span>
                         {{-- <button type="reset" class="btn btn-secondary">Clear Form</button> --}}
-                        <button type="submit" class="btn btn-success" disabled id="submit-rent">Submit</button>
                     </div>
                 </form>
 
@@ -314,6 +321,15 @@
             );
         });
 
+        $("#from_date,#until_date,#room_id").change(function() {
+            $('#availability-message').addClass("d-none");
+            $('#collide-message').addClass("d-none");
+            $('#submit-rent').prop("disabled", true);
+            $('#submit-rent').addClass("d-none");
+            $('#check-availability').removeClass("d-none");
+
+        });
+
         $("#check-availability").click(function(e) {
             e.preventDefault();
             $.ajax({
@@ -331,18 +347,22 @@
                     $('select').removeClass('is-invalid');
                     $('#submit-rent').prop("disabled", true);
                     $('#availability-message').addClass("d-none");
+                    $('#collide-message').addClass("d-none");
                     $('#alert-collide-wrapper').empty();
 
                 },
                 success: function(jqXHR) {
-                    if(jqXHR.code == 200)
-                    {
+                    if (jqXHR.code == 200) {
                         $('#submit-rent').prop("disabled", false);
+                        $('#submit-rent').removeClass("d-none");
+
                         $('#availability-message').removeClass("d-none");
-                    }
-                    else if(jqXHR.code == 422)
-                    {
-                        $('.modal').animate({ scrollTop: 0 }, 'slow');
+                        $('#check-availability').addClass("d-none");
+                    } else if (jqXHR.code == 422) {
+                        $('.modal').animate({
+                            scrollTop: 0
+                        }, 'slow');
+                        $('#collide-message').removeClass("d-none");
                         $('#alert-collide-wrapper').append(jqXHR.data);
                     }
                 },
