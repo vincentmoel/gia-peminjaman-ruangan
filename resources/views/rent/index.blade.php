@@ -121,11 +121,14 @@
     <!-- Add Data Modal -->
     <div class="modal fade" id="addDataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="addDataModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="max-width: 600px">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addDataModalLabel">Add Rent</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="mx-3 mt-3" id="alert-collide-wrapper">
                 </div>
 
                 <form action="/rents" method="POST">
@@ -237,7 +240,7 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-end text-center">
-                        <button type="reset" class="btn btn-secondary">Clear Form</button>
+                        {{-- <button type="reset" class="btn btn-secondary">Clear Form</button> --}}
                         <button type="submit" class="btn btn-success" disabled id="submit-rent">Submit</button>
                     </div>
                 </form>
@@ -328,7 +331,7 @@
                     $('select').removeClass('is-invalid');
                     $('#submit-rent').prop("disabled", true);
                     $('#availability-message').addClass("d-none");
-                    
+                    $('#alert-collide-wrapper').empty();
 
                 },
                 success: function(jqXHR) {
@@ -339,7 +342,8 @@
                     }
                     else if(jqXHR.code == 422)
                     {
-                        console.log('asd');
+                        $('.modal').animate({ scrollTop: 0 }, 'slow');
+                        $('#alert-collide-wrapper').append(jqXHR.data);
                     }
                 },
                 error: function(jqXHR) {

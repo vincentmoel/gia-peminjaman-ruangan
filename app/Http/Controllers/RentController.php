@@ -166,11 +166,20 @@ class RentController extends Controller
         }
         else
         {
+            // return "asd"
+            // return (String) view('rent.alert_collide',[
+            //     'data'  => $isAvailable
+            // ])->render();
+            // return (String) view('rent.alert_collide',[
+            //     "data" => $isAvailable
+            // ]);
             $response = [
                 "code"      => "422",
                 "status"    => "error",
                 "message"   => "Room is not available",
-                "data"      => $isAvailable
+                "data"      =>  view('rent.alert_collide',[
+                                    'datas'  => $isAvailable
+                                ])->render()
             ];
         }
 
